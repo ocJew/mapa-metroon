@@ -25,7 +25,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-let markerNorte, markerSul;
+let markerNorte, markerSul, markerUsuario;
 var northLayer = L.layerGroup().addTo(map);
 var southLayer = L.layerGroup().addTo(map);
 var SNLayer = L.layerGroup().addTo(map);
@@ -139,10 +139,6 @@ metrosRefSul.orderBy('timestamp', 'desc').limit(1).onSnapshot(snapshot => {
   });
 });
 
-
-
-
-
 function toggleLayer(layer, show) {
     if (show) {
         if (!map.hasLayer(layer)) {
@@ -191,18 +187,32 @@ function watchUserLocation() {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     });
+
     if ("geolocation" in navigator) {
-        navigator.geolocation.watchPosition(function(position) {
-            var userLat = position.coords.latitude;
-            var userLng = position.coords.longitude;
-            L.marker([userLat, userLng], { icon: blueIcon }).addTo(SNLayer).bindPopup("Sua localização");
-        }, function(error) {
-            console.error('Erro ao obter localização:', error.message);
-        },{
-            enableHighAccuracy: true,  // Tenta obter uma posição mais precisa
-            timeout: 10000,            // Tempo máximo para obter a localização em milissegundos
-            maximumAge: 0,              // Aceita apenas posições recentes
-        });
+        navigator.geolocation.watchPosition(
+            function(position) {
+                var userLat = position.coords.latitude;
+                var userLng = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                console.log(`Latitude: ${userLat}, Longitude: ${userLng}, Accuracy: ${accuracy}`);
+
+                if (markerUsuario) {
+                    markerUsuario.setLatLng([userLat, userLng]);
+                } else {
+                    markerUsuario = L.marker([userLat, userLng], { icon: blueIcon }).addTo(SNLayer).bindPopup("Sua localização");
+                }
+            },
+            function(error) {
+                console.error('Erro ao obter localização:', error.message);
+            },
+            {
+                enableHighAccuracy: true,  // Tenta obter uma posição mais precisa
+                timeout: 10000,            // Tempo máximo para obter a localização em milissegundos
+                maximumAge: 0,             // Aceita apenas posições recentes
+                distanceFilter: 1          // Atualiza a posição se a mudança for maior que 1 metro
+            }
+        );
     } else {
         console.log('Geolocalização não é suportada pelo seu navegador.');
     }
