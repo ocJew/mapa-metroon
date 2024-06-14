@@ -1,0 +1,72 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+#map {
+    height: 100vh;
+    width: 100%;
+}
+.control-buttons {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+.control-buttons button {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.control-buttons button:hover {
+    background-color: #f0f0f0;
+}
+.control-buttons button.active {
+    border-color: #00000065;
+}
+#button-norte {
+    background-color: rgba(153, 153, 255, 0.534);
+}
+#button-sul {
+    background-color: rgba(255, 153, 153, 0.5);
+}
+#button-ambos {
+    position: absolute;
+    left: -100px;
+    background-color: #ffffff71;
+    border: 2px solid #cccccc6e;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+body.dark-mode .control-buttons button {
+    background-color: #444;
+    border-color: #888;
+    color: #fff;
+}
+body.dark-mode .control-buttons button:hover {
+    background-color: #555;
+}
+body.dark-mode .control-buttons button.active {
+    border-color: #00ffff;
+}
+body.dark-mode #button-norte {
+    background-color: #6699ff75;
+}
+body.dark-mode #button-sul {
+    background-color: #ff666679;
+}
+body.dark-mode #button-ambos {
+    background-color: #66666675;
+    border-color: #99999977;
+}
