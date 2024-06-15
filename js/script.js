@@ -219,3 +219,62 @@ function watchUserLocation() {
 }
 // Chamada para iniciar a monitoração da posição do usuário
 watchUserLocation();
+
+
+
+const searchInput = document.getElementById('stationSearch');
+const suggestionsBox = document.getElementById('suggestions');
+const searchStations = (query) => {
+    // Filtra as estações com base no nome
+    const stations = [];
+    northLayer.eachLayer(layer => {
+        if (layer instanceof L.Marker && layer.options.icon.options.iconUrl.includes('icons/blueball.png')) {
+            // Verifica se é uma estação (ícone azul)
+            const name = layer.getPopup().getContent();
+            if (name.toLowerCase().includes(query.toLowerCase())) {
+                stations.push(layer);
+            }
+        }
+    });
+    southLayer.eachLayer(layer => {
+        if (layer instanceof L.Marker && layer.options.icon.options.iconUrl.includes('icons/redball.png')) {
+            // Verifica se é uma estação (ícone vermelho)
+            const name = layer.getPopup().getContent();
+            if (name.toLowerCase().includes(query.toLowerCase())) {
+                stations.push(layer);
+            }
+        }
+    });
+    return stations;
+};
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value;
+    const stations = searchStations(query);
+    suggestionsBox.innerHTML = '';
+
+    if (stations.length > 0) {
+        stations.forEach(station => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.textContent = station.getPopup().getContent();
+            suggestionItem.addEventListener('click', () => {
+                map.setView(station.getLatLng(), 15);
+                station.openPopup();
+                suggestionsBox.innerHTML = '';
+                searchInput.value = '';
+            });
+            suggestionsBox.appendChild(suggestionItem);
+        });
+    } else {
+        const noResultItem = document.createElement('div');
+        noResultItem.classList.add('suggestion-item');
+        noResultItem.textContent = 'Nenhuma estação encontrada';
+        suggestionsBox.appendChild(noResultItem);
+    }
+});
+document.addEventListener('click', (event) => {
+    // Verifica se o clique ocorreu fora da barra de pesquisa e da caixa de sugestões
+    if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
+        suggestionsBox.innerHTML = '';
+    }
+});

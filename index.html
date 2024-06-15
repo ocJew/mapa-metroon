@@ -5,10 +5,16 @@
     <title>Metroon</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.4/leaflet-search.min.css">
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
     <div id="map"></div>
+    <div class="search-bar">
+        <input type="text" id="stationSearch" placeholder="Busque por estações...">
+        <img src="icons/lupa.png" alt="Search" class="search-icon">
+        <div id="suggestions" class="suggestions"></div>
+    </div>
     <div class="control-buttons">
         <button id="button-ambos" class="active">Resetar</button>
         <button id="button-norte">N</button>
@@ -20,7 +26,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.13.0/leaflet-providers.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="js/script.js"></script> <!-- Incluindo o arquivo JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.4/leaflet-search.min.js"></script>
+    <script src="js/script.js"></script> 
 </body>
 </html>
 

@@ -10,7 +10,7 @@ body, html {
 }
 .control-buttons {
     position: fixed;
-    top: 10px;
+    top: 85px;
     right: 10px;
     display: flex;
     flex-direction: column;
@@ -45,28 +45,50 @@ body, html {
     border-radius: 5px;
     padding: 10px 15px;
 }
-body.dark-mode {
-    background-color: #333;
-    color: #fff;
+.search-bar {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    right: 35px;
+    z-index: 2000;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
 }
-body.dark-mode .control-buttons button {
-    background-color: #444;
-    border-color: #888;
-    color: #fff;
+.search-bar input[type="text"] {
+    width: calc(100% - 20px); /* Considerando o padding de 10px em cada lado */
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #555
 }
-body.dark-mode .control-buttons button:hover {
-    background-color: #555;
+.search-icon {
+    position: absolute;
+    right: 10px; /* Alinhe conforme necessário */
+    width: 24px; /* Ajuste o tamanho conforme necessário */
+    height: 24px; /* Ajuste o tamanho conforme necessário */
+    cursor: pointer;
 }
-body.dark-mode .control-buttons button.active {
-    border-color: #00ffff;
+.suggestions {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: white;
+    width: calc(100% - 60px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
 }
-body.dark-mode #button-norte {
-    background-color: #6699ff75;
+.suggestion-item {
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #555
 }
-body.dark-mode #button-sul {
-    background-color: #ff666679;
-}
-body.dark-mode #button-ambos {
-    background-color: #66666675;
-    border-color: #99999977;
+.suggestion-item:hover {
+    background: #eee;
 }
